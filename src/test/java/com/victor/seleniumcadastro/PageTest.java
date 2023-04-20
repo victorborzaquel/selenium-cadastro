@@ -90,6 +90,116 @@ class PageTest {
     }
 
     @Test
+    void createFrontEndRegister() {
+        Form form = new Form.Builder(page)
+                .name("Victor")
+                .lastName("Borzaquel")
+                .gender(FEMALE)
+                .knowledge(List.of(JAVASCRIPT, REACT))
+                .areaInterest(FRONTEND)
+                .principalArea(FRONTEND)
+                .whyWantJob("I want to work")
+                .build();
+
+        assertArrayEquals(new String[]{}, form.resultArea());
+
+        form.submit();
+
+        completeAlert();
+
+        String[] expected = new String[] {"Victor", "Borzaquel", "feminino", "Frontend", "Frontend"};
+        assertArrayEquals(expected, form.resultArea());
+    }
+
+    @Test
+    void createDevopsRegister() {
+        Form form = new Form.Builder(page)
+                .name("Victor")
+                .lastName("Borzaquel")
+                .gender(FEMALE)
+                .knowledge(List.of(JAVASCRIPT, JAVA))
+                .areaInterest(DEVOPS)
+                .principalArea(DEVOPS)
+                .whyWantJob("I want to work")
+                .build();
+
+        assertArrayEquals(new String[]{}, form.resultArea());
+
+        form.submit();
+
+        completeAlert();
+
+        String[] expected = new String[] {"Victor", "Borzaquel", "feminino", "Devops", "Devops"};
+        assertArrayEquals(expected, form.resultArea());
+    }
+
+    @Test
+    void createBackendRegister() {
+        Form form = new Form.Builder(page)
+                .name("Victor")
+                .lastName("Borzaquel")
+                .gender(FEMALE)
+                .knowledge(List.of(JAVASCRIPT, JAVA))
+                .areaInterest(BACKEND)
+                .principalArea(BACKEND)
+                .whyWantJob("I want to work")
+                .build();
+
+        assertArrayEquals(new String[]{}, form.resultArea());
+
+        form.submit();
+
+        completeAlert();
+
+        String[] expected = new String[] {"Victor", "Borzaquel", "feminino", "Backend", "Backend"};
+        assertArrayEquals(expected, form.resultArea());
+    }
+
+    @Test
+    void notRegisterTagHTMLInName() {
+        Form form = new Form.Builder(page)
+                .name("</td><h1>Victor</h1><td>")
+                .lastName("Borzaquel")
+                .gender(FEMALE)
+                .knowledge(List.of(JAVASCRIPT, JAVA))
+                .areaInterest(BACKEND)
+                .principalArea(BACKEND)
+                .whyWantJob("I want to work")
+                .build();
+
+        assertArrayEquals(new String[]{}, form.resultArea());
+
+        form.submit();
+
+        completeAlert();
+
+        String[] expected = new String[] {"Victor", "Borzaquel", "feminino", "Backend", "Backend"};
+        assertArrayEquals(expected, form.resultArea());
+    }
+
+    @Test
+    void notRegisterTagHTMLInLastName() {
+        Form form = new Form.Builder(page)
+                .name("Victor")
+                .lastName("</td><h1>Borzaquel</h1><td>")
+                .gender(FEMALE)
+                .knowledge(List.of(JAVASCRIPT, JAVA))
+                .areaInterest(BACKEND)
+                .principalArea(BACKEND)
+                .whyWantJob("I want to work")
+                .build();
+
+        assertArrayEquals(new String[]{}, form.resultArea());
+
+        form.submit();
+
+        completeAlert();
+
+        String[] expected = new String[] {"Victor", "Borzaquel", "feminino", "Backend", "Backend"};
+        assertArrayEquals(expected, form.resultArea());
+    }
+
+    @Test
     void nameIsSpace() {
         Form form = new Form.Builder(page)
                 .name(" ")
